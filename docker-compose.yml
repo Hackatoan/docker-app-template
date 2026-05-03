@@ -1,0 +1,15 @@
+services:
+  app:
+    image: ghcr.io/hackatoan/APPNAME:latest
+    container_name: APPNAME
+    restart: unless-stopped
+    ports:
+      - "PORT:3000"
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+# networks:
+#   default:
+#     name: MARIADB_NETWORK
+#     external: true
