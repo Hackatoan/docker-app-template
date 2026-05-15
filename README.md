@@ -8,20 +8,30 @@ Next.js app pre-wired for auto-deployment via GitHub Actions + Watchtower.
 
 ## How Watchtower works
 
-Watchtower runs on the Docker host and polls GHCR every 5 minutes. Any container with the label `com.centurylinklabs.watchtower.enable=true` will be automatically updated when a new image is pushed.
+Watchtower runs on the Docker host and polls GHCR every 5 minutes. Any container with the label `com.centurylinklabs.watchtower.enable=true` will be automatically updated when a new image is pushed. No webhooks, no secrets, no deploy agent needed.
 
 ## New app checklist
 
 - [ ] Use this template to create a new repo
 - [ ] On the server, create `/opt/apps/APPNAME/docker-compose.yml`:
-  
-- [ ]  on the server (first time only)
-- [ ] Add NPM proxy host pointing to 
+  ```yaml
+  services:
+    app:
+      image: ghcr.io/hackatoan/APPNAME:latest
+      container_name: APPNAME
+      restart: unless-stopped
+      ports:
+        - "PORT:PORT"
+      labels:
+        - "com.centurylinklabs.watchtower.enable=true"
+  ```
+- [ ] `docker compose up -d` on the server (first time only)
+- [ ] Add NPM proxy host pointing to `localhost:PORT`
 - [ ] Push to main — Watchtower handles all future deploys automatically
 
 ## No secrets needed
 
-The deploy workflow uses  (auto-provided by Actions) to push to GHCR. No additional secrets required.
+The deploy workflow uses `GITHUB_TOKEN` (auto-provided by Actions) to push to GHCR. No additional secrets required.
 
 ---
 
