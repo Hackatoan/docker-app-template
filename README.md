@@ -4,29 +4,24 @@
 
 Next.js app pre-wired for auto-deployment via GitHub Actions + Watchtower.
 
-**Flow:** push to main → GitHub builds Docker image → pushes to GHCR → Watchtower pulls it → live in ~60s
+**Flow:** push to main → GitHub Actions builds Docker image → pushes to GHCR → Watchtower pulls and restarts the container automatically (~5 min lag).
+
+## How Watchtower works
+
+Watchtower runs on the Docker host and polls GHCR every 5 minutes. Any container with the label `com.centurylinklabs.watchtower.enable=true` will be automatically updated when a new image is pushed.
 
 ## New app checklist
 
 - [ ] Use this template to create a new repo
-- [ ] Create `/opt/apps/APPNAME/docker-compose.yml` on the server
-- [ ] Replace `APPNAME` and `PORT` in the compose file
-- [ ] `docker compose up -d` on the server (first time only)
-- [ ] Add NPM proxy host pointing to `localhost:PORT`
-- [ ] Push to main — auto-deploys from here on
+- [ ] On the server, create `/opt/apps/APPNAME/docker-compose.yml`:
+  
+- [ ]  on the server (first time only)
+- [ ] Add NPM proxy host pointing to 
+- [ ] Push to main — Watchtower handles all future deploys automatically
 
-## Usage
+## No secrets needed
 
-```bash
-# First deploy (on server):
-mkdir -p /opt/apps/my-app
-cd /opt/apps/my-app
-# Edit docker-compose.yml with correct image and port
-docker compose up -d
-
-# Subsequent deploys: just push to main
-git push origin main
-```
+The deploy workflow uses  (auto-provided by Actions) to push to GHCR. No additional secrets required.
 
 ---
 
