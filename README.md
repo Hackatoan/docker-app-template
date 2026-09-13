@@ -1,38 +1,34 @@
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/hackatoa)
+# docker-app-template
 
-# Docker App Template
+A starter template for containerized web apps with automated deployment.
 
-Next.js app pre-wired for auto-deployment via GitHub Actions + Watchtower.
+☕ **Support:** [Buy Me a Coffee](https://buymeacoffee.com/hackatoa)
 
-**Flow:** push to main → GitHub Actions builds Docker image → pushes to GHCR → Watchtower pulls and restarts the container automatically (~5 min lag).
+## Overview
 
-## How Watchtower works
+A batteries-included template: a Next.js app, a Dockerfile, and a GitHub Actions workflow that builds and publishes an image to GHCR, which Watchtower then auto-deploys. Clone it to spin up a new self-hosted service fast.
 
-Watchtower runs on the Docker host and polls GHCR every 5 minutes. Any container with the label `com.centurylinklabs.watchtower.enable=true` will be automatically updated when a new image is pushed. No webhooks, no secrets, no deploy agent needed.
+## Features
 
-## New app checklist
+- Next.js app scaffold
+- Production Dockerfile
+- GitHub Actions → GHCR image build on push
+- Watchtower-based auto-deploy
 
-- [ ] Use this template to create a new repo
-- [ ] On the server, create `/opt/apps/APPNAME/docker-compose.yml`:
-  ```yaml
-  services:
-    app:
-      image: ghcr.io/hackatoan/APPNAME:latest
-      container_name: APPNAME
-      restart: unless-stopped
-      ports:
-        - "PORT:PORT"
-      labels:
-        - "com.centurylinklabs.watchtower.enable=true"
-  ```
-- [ ] `docker compose up -d` on the server (first time only)
-- [ ] Add NPM proxy host pointing to `localhost:PORT`
-- [ ] Push to main — Watchtower handles all future deploys automatically
+## Tech Stack
 
-## No secrets needed
+Next.js · Docker · GitHub Actions · Watchtower
 
-The deploy workflow uses `GITHUB_TOKEN` (auto-provided by Actions) to push to GHCR. No additional secrets required.
+## Usage
+
+Use this repo as a template, set the image name in the workflow + compose file, and push — the container updates itself on the host via Watchtower.
+
+## Support
+
+If this project is useful to you, consider supporting development:
+
+☕ **[Buy Me a Coffee](https://buymeacoffee.com/hackatoa)**
 
 ---
 
-[hackatoa.com](https://hackatoa.com) · [GitHub](https://github.com/Hackatoan) · [Buy Me A Coffee](https://buymeacoffee.com/hackatoa)
+Part of the **[Hackatoa](https://hackatoa.com)** ecosystem — self-hosted apps, browser games, and bots. · [All repositories »](https://github.com/Hackatoan)
