@@ -2,6 +2,11 @@ node_modules
 .next
 .git
 .gitignore
+.github
+.editorconfig
+.nvmrc
+docker-compose.yml
+LICENSE
 *.md
 .env*
 !.env.example
