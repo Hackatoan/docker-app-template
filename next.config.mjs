@@ -11,6 +11,13 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
   },
+  // Content-Security-Policy: default-src 'self' prevents inline scripts and
+  // restricts resources to same-origin, defending against XSS attacks.
+  // Loosen or remove entries as your app's legitimate needs require.
+  {
+    key: "Content-Security-Policy",
+    value: "default-src 'self'; script-src 'self'",
+  },
 ];
 
 /** @type {import('next').NextConfig} */
