@@ -9,6 +9,15 @@ services:
       - NODE_ENV=production
     env_file:
       - .env
+    # Polls the built-in /api/health route; `docker compose ps` shows
+    # healthy/unhealthy. Uses busybox wget from node:alpine (no curl needed).
+    # Delete this block if your app drops the route.
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 # networks:
