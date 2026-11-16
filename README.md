@@ -14,7 +14,7 @@ A batteries-included template: a Next.js app, a Dockerfile, and a GitHub Actions
 - Production Dockerfile
 - GitHub Actions → GHCR image build on push
 - Watchtower-based auto-deploy
-- `/api/health` endpoint + Docker Compose healthcheck (`docker compose ps` shows healthy/unhealthy)
+- `/api/health` endpoint (reports `version` from package.json, or `APP_VERSION` if set) + Docker Compose healthcheck (`docker compose ps` shows healthy/unhealthy)
 
 ## Tech Stack
 
